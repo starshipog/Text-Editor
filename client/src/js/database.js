@@ -12,6 +12,25 @@ const initdb = async () =>
     },
   });
 
+
+
+export const getDb = async (id) => {
+  console.log('GET from the database');
+
+  const todosDb = await openDB('todos', 1);
+
+  const tx = todosDb.transaction('todos', 'readonly');
+
+  const store = tx.objectStore('todos');
+
+  const request = store.get(id);
+
+  const result = await request;
+  console.log('result.value', result);
+  return result;
+};
+
+
 // TODO: Add logic to a method that accepts some content and adds it to the database (DONE)
 export const putDb = async (content) => {
   console.log('Add to the database');
